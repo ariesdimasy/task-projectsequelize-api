@@ -11,14 +11,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Task.belongsTo(models.User)
-      models.User.hasMany(Task);
+      Task.belongsTo(models.User, { 
+        foreignKey:'user_id'
+      })
+      models.User.hasMany(Task, { 
+        foreignKey:'user_id'
+      });
     }
   }
   Task.init({
     title: DataTypes.STRING,
     desc: DataTypes.STRING,
-    done: DataTypes.BOOLEAN
+    done: DataTypes.BOOLEAN,
+    image: DataTypes.STRING,
+    userId: { 
+      type:DataTypes.INTEGER,
+      field:'user_id'
+    }
   }, {
     sequelize,
     modelName: 'Task',
